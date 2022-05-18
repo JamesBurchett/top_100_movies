@@ -1,0 +1,21 @@
+from bs4 import BeautifulSoup
+import requests
+
+response = requests.get(
+    "https://web.archive.org/web/20200518073855/https://www.empireonline.com/movies/features/best-movies-2/")
+empire_webpage = response.text
+
+soup = BeautifulSoup(empire_webpage, "html.parser")
+
+movie_data = soup.find_all(name="h3", class_="title")
+
+movie_list = []
+
+for movie in movie_data:
+    movie_name = movie.getText()
+    movie_list.append(movie_name)
+
+reversed_list = reversed(movie_list)
+
+for movie in reversed_list:
+    print(movie)
